@@ -1,0 +1,13 @@
+{
+    "id": "example",
+    "title": "Some Sale",
+    "description": "End of Season LOOOOOT!",
+    "start_time": "2024-12-01T00:00:00Z",
+    "end_time": "2024-12-25T23:59:59Z",
+    "locations": [
+        "US",
+        "CA",
+        "DE",
+        "FR"
+    ]
+}
