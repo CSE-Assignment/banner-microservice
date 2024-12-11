@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package banner;
+
+// Request message for getting the current banner.
+message GetCurrentBannerRequest {
+  string location = 1;
+}
+
+// Response message containing the banner configuration and image data.
+message GetCurrentBannerResponse {
+  string title = 1;
+  string description = 2;
+  bytes image = 3; 
+  string image_format = 4;
+}
+
+// The BannerService definition.
+service BannerService {
+  // Fetches the current banner configuration.
+  rpc GetCurrentBanner(GetCurrentBannerRequest) returns (GetCurrentBannerResponse);
+}
