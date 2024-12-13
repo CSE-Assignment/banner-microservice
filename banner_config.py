@@ -51,7 +51,7 @@ def validate_config(config: dict) -> bool:
     except ValueError as e:
         logging.error(f"Invalid datetime format in config: {e}")
         return False
-    return True
+    return False
 
 
 def load_configs(config_dir: str = "resources/configs") -> List[BannerConfig]:
