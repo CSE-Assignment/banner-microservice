@@ -21,6 +21,9 @@ jobs:
           chmod +x skaffold
           sudo mv skaffold /usr/local/bin/
 
+      - name: Skaffold Init
+        run: skaffold init --analyze
+
       # Run Skaffold Render to Show Planned Changes
       - name: Skaffold Render
         id: skaffold_render
