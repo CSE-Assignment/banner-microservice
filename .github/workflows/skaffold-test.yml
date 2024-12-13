@@ -1,0 +1,51 @@
+name: Run Unit Tests and Skaffold Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Show Planned Changes
+      run: |
+        echo "Planned Changes:"
+        git diff --name-only HEAD^ HEAD || echo "No changes detected"
+      continue-on-error: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install Skaffold
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+        chmod +x skaffold
+        sudo mv skaffold /usr/local/bin
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest
+
+    - name: Run Unit Tests
+      run: pytest tests/
+
+    - name: Run Skaffold Tests
+      run: skaffold test
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: tests
