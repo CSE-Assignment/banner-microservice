@@ -1,0 +1,38 @@
+name: Skaffold Plan
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  skaffold-plan:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install Skaffold
+      - name: Install Skaffold
+        run: |
+          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+          chmod +x skaffold
+          sudo mv skaffold /usr/local/bin/
+
+      # Run Skaffold Render to Show Planned Changes
+      - name: Skaffold Render
+        id: skaffold_render
+        run: |
+          skaffold render > rendered-manifests.yaml
+
+      # Display Planned Changes in the Pull Request
+      - name: Post Render as Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: "Skaffold Plan"
+          message: |
+            ```yaml
+            ${{ steps.skaffold_render.outputs.plan }}
+            ```
