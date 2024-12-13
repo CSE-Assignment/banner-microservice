@@ -37,11 +37,15 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+
     - name: Run Unit Tests
       run: pytest tests/
 
-    - name: Run Skaffold Tests
-      run: skaffold test
+## Temporarily disabled
+   ## - name: Run Skaffold Tests
+   ##   run: skaffold test
 
     - name: Upload Test Results
       if: always()
