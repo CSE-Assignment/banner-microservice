@@ -1,5 +1,16 @@
 from datetime import datetime, timezone
 
+import pytest
+from banner_service import BannerService
+
+@pytest.fixture
+def service():
+    """
+    Provides an instance of the BannerService for testing.
+    """
+    return BannerService()
+
+
 def test_get_current_banner_with_image(mocker, service):
     """
     Test that GetCurrentBanner returns the banner with the correct image data.
