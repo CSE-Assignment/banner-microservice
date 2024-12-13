@@ -1,7 +1,8 @@
-from datetime import datetime, timezone
-
 import pytest
 from banner_service import BannerService
+from banner_config import load_configs
+from datetime import datetime, timezone
+
 
 @pytest.fixture
 def service():
