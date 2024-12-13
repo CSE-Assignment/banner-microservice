@@ -3,7 +3,12 @@ from typing import Optional
 from grpc import ServicerContext
 from concurrent import futures
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
+
+import sys
+import os
+# Add the root project directory to PYTHONPATH
+sys.path.append(os.path.join(os.path.dirname(__file__), "generated"))
 
 from generated import banner_service_pb2, banner_service_pb2_grpc
 from banner_config import load_configs, BannerConfig
@@ -40,7 +45,7 @@ class BannerService(banner_service_pb2_grpc.BannerServiceServicer):
         """
         # Extract location and current time
         location = request.location
-        current_time = datetime.now(datetime.timezone.utc)
+        current_time = datetime.now(timezone.utc)
 
         # Filter banners based on time and location
         matching_banners = [
@@ -99,8 +104,8 @@ class BannerService(banner_service_pb2_grpc.BannerServiceServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     banner_service_pb2_grpc.add_BannerServiceServicer_to_server(BannerService(), server)
-    server.add_insecure_port("[::]:50051")
-    logging.info("Starting gRPC server on port 50051...")
+    server.add_insecure_port("[::]:51234")
+    logging.info("Starting gRPC server on port 51234...")
     server.start()
     server.wait_for_termination()
 
