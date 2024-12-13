@@ -1,6 +1,7 @@
 import os
 import json
 from datetime import datetime
+import logging
 from typing import List
 
 
@@ -41,14 +42,14 @@ def validate_config(config: dict) -> bool:
     """
     required_keys = {"id", "title", "description", "start_time", "end_time", "locations"}
     if not all(key in config for key in required_keys):
-        print(f"Invalid config: Missing keys. Found keys: {config.keys()}")
+        logging.error(f"Invalid config: Missing keys. Found keys: {config.keys()}")
         return False
     try:
         # Validate ISO 8601 datetime format
         datetime.fromisoformat(config["start_time"].replace("Z", "+00:00"))
         datetime.fromisoformat(config["end_time"].replace("Z", "+00:00"))
     except ValueError as e:
-        print(f"Invalid datetime format in config: {e}")
+        logging.error(f"Invalid datetime format in config: {e}")
         return False
     return True
 
@@ -63,9 +64,11 @@ def load_configs(config_dir: str = "resources/configs") -> List[BannerConfig]:
     Returns:
         List[BannerConfig]: A list of validated BannerConfig objects.
     """
+    logging.info("Loading banner configs.")
+    
     configs = []
     if not os.path.exists(config_dir):
-        print(f"Config directory {config_dir} does not exist.")
+        logging.error(f"Config directory {config_dir} does not exist.")
         return configs
 
     for filename in os.listdir(config_dir):
@@ -77,9 +80,9 @@ def load_configs(config_dir: str = "resources/configs") -> List[BannerConfig]:
                     if validate_config(config_data):
                         configs.append(BannerConfig(**config_data))
                     else:
-                        print(f"Skipping invalid config file: {filename}")
+                        logging.warning(f"Skipping invalid config file: {filename}")
             except (json.JSONDecodeError, IOError) as e:
-                print(f"Error reading file {filename}: {e}")
+                logging.error(f"Error reading file {filename}: {e}")
 
     return configs
 
