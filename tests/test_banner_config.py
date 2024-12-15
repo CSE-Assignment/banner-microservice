@@ -1,6 +1,7 @@
 import os
 import pytest
 from banner_config import BannerConfig, validate_config, load_configs
+pytestmark = pytest.mark.unit
 
 @pytest.fixture
 def example_config():
