@@ -1,8 +1,8 @@
 import pytest
+from unittest.mock import mock_open
 from generated import banner_service_pb2
 from banner_service import BannerService
 from banner_config import BannerConfig
-from unittest.mock import patch
 from datetime import datetime, timezone
 
 pytestmark = pytest.mark.component
@@ -14,7 +14,7 @@ def service():
 
 def test_grpc_get_current_banner(mocker, service):
     """Test the gRPC GetCurrentBanner API."""
-    # Mock the config
+    # Mock the banners
     mock_banners = [
         BannerConfig(
             id="test_banner",
@@ -31,11 +31,16 @@ def test_grpc_get_current_banner(mocker, service):
     mock_datetime = mocker.patch("banner_service.datetime")
     mock_datetime.now.return_value = datetime(2024, 12, 10, tzinfo=timezone.utc)
 
+    # Mock file open for the banner image
+    mock_file = mock_open(read_data=b"mock_image_data")
+    mocker.patch("builtins.open", mock_file)
+
     request = banner_service_pb2.GetCurrentBannerRequest(location="US")
     response = service.GetCurrentBanner(request, None)
 
     assert response.title == "Test Banner"
     assert response.description == "Test Description"
+    assert response.image == b"mock_image_data" 
 
 def test_missing_banner_image(mocker, service):
     """Test that the default banner is returned if the image file is missing."""
