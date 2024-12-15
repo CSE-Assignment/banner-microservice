@@ -5,6 +5,8 @@ from banner_config import BannerConfig
 from unittest.mock import patch
 from datetime import datetime, timezone
 
+pytestmark = pytest.mark.component
+
 @pytest.fixture
 def service():
     """Provides an instance of the BannerService."""
