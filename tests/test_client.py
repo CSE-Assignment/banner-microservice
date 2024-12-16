@@ -1,6 +1,8 @@
 import grpc
 from generated import banner_service_pb2, banner_service_pb2_grpc
 
+pytestmark = pytest.mark.integration
+
 def test_banner_service():
     """Test the deployed banner service."""
     channel = grpc.insecure_channel("bannerservice:51234")
