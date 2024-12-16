@@ -1,8 +1,4 @@
 import pytest
-from banner_service import BannerService
-from banner_config import load_configs
-from generated import banner_service_pb2
-from datetime import datetime, timezone
 import grpc
 from generated import banner_service_pb2, banner_service_pb2_grpc
 
