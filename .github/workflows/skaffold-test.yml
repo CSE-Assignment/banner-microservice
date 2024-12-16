@@ -46,6 +46,9 @@ jobs:
     - name: Run Component Tests
       run: pytest -m component tests/
 
+    - name: Run Integration Tests
+      run: pytest -m integration tests/
+
 ## Temporarily disabled
    ## - name: Run Skaffold Tests
    ##   run: skaffold test
