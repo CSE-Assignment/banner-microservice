@@ -1,5 +1,9 @@
 import grpc
 import pytest
+import sys
+import os
+# Add the root project directory to PYTHONPATH 
+sys.path.append(os.path.join(os.path.dirname(__file__), "generated"))
 from generated import banner_service_pb2, banner_service_pb2_grpc
 
 pytestmark = pytest.mark.e2e
