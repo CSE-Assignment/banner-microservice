@@ -23,7 +23,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: 3.12
 
     - name: Install Skaffold
       run: |
@@ -33,18 +33,29 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
+        python -m pip install --upgrade pip setuptools wheel
         pip install -r requirements.txt
-        pip install pytest
+        pip install pytest grpcio grpcio-tools
+
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
+    - name: Build and Run Banner Service Docker Container
+      run: |
+        docker build -t bannerservice:latest .
+        docker run -d --name banner-service -p 51234:51234 bannerservice:latest
+        sleep 10  # Wait for the server to start
+    
     - name: Run Unit Tests
       run: pytest -m unit tests/
 
     - name: Run Component Tests
       run: pytest -m component tests/
+
+    - name: Run End-to-End Tests
+      run: pytest -m e2e tests/
+
 
 ## Temporarily disabled
    ## - name: Run Skaffold Tests
@@ -56,3 +67,6 @@ jobs:
       with:
         name: test-results
         path: tests
+
+    - name: Stop and Clean Up Docker Container
+      run: docker stop banner-service && docker rm banner-service
