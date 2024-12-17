@@ -36,7 +36,7 @@ pyparsing==3.0.9
 pytest==7.2.1
 python-dateutil==2.8.2
 pyzmq==24.0.1
-scipy==1.9.3
+scipy==1.11.4
 six==1.16.0
 stack-data==0.5.1
 tomli==2.2.1
