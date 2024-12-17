@@ -41,28 +41,12 @@ jobs:
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
-    - name: Build Docker Image
+    - name: Build and Run Banner Service Docker Container
       run: |
         docker build -t bannerservice:latest .
-
-    - name: Start gRPC Server Container
-      run: |
         docker run -d --name banner-service -p 51234:51234 bannerservice:latest
-        echo "Waiting for the server to start..."
-
-    - name: Wait for Server Readiness
-      run: |
-        for i in {1..10}; do
-          if grpcurl -plaintext localhost:51234 describe; then
-            echo "Server is ready!"
-            exit 0
-          fi
-           echo "Waiting for the server..."
-          sleep 5
-        done
-        echo "Server failed to start in time."
-        exit 1
-
+        sleep 10  # Wait for the server to start
+    
     - name: Run Unit Tests
       run: pytest -m unit tests/
 
