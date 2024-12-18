@@ -14,7 +14,10 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y conntrack socat ebtables crictl
+          sudo apt-get install -y conntrack socat ebtables
+          curl -LO https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.31.0/crictl-v1.31.0-linux-amd64.tar.gz
+          sudo tar -zxvf crictl-v1.31.0-linux-amd64.tar.gz -C /usr/local/bin
+          rm crictl-v1.31.0-linux-amd64.tar.gz
 
       - name: Set Up Minikube
         run: |
