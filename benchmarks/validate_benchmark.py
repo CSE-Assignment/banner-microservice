@@ -39,5 +39,5 @@ if __name__ == "__main__":
         "Avg Response Time": 1000,  # Max average response time in ms
         "Failure Count": 1,        # Max number of failures
     }
-    CSV_FILE = "locust_logs_stats_stats.csv"
+    CSV_FILE = "locust_logs/locust_logs_stats_stats.csv"
     validate_benchmark_results(CSV_FILE, THRESHOLDS)
