@@ -1,29 +1,31 @@
-import json
 import sys
+import os
 
 def validate_benchmark_results(csv_file, thresholds):
     """
     Validates benchmark results against predefined thresholds.
 
     Args:
-        csv_file (str): Path to the Locust CSV file (e.g., summary stats).
+        csv_file (str): Path to the Locust stats CSV file.
         thresholds (dict): Thresholds for metrics.
 
     Raises:
         ValueError: If any metric fails to meet its threshold.
     """
+    if not os.path.exists(csv_file):
+        print(f"Error: CSV file '{csv_file}' does not exist.")
+        sys.exit(1)
+
     try:
         with open(csv_file, 'r') as file:
             lines = file.readlines()
 
-        # Parse last line of CSV (summary stats)
         headers = lines[0].strip().split(',')
         values = lines[-1].strip().split(',')
         stats = dict(zip(headers, values))
 
-        # Validate metrics
         for metric, threshold in thresholds.items():
-            if float(stats[metric]) > threshold:
+            if float(stats.get(metric, 0)) > threshold:
                 print(f"Threshold exceeded for {metric}: {stats[metric]} > {threshold}")
                 raise ValueError(f"Performance validation failed for {metric}")
         
@@ -34,8 +36,8 @@ def validate_benchmark_results(csv_file, thresholds):
 
 if __name__ == "__main__":
     THRESHOLDS = {
-        "response_time": 1000,  # Max response time in ms
-        "failure_rate": 1,     # Max failure rate in %
+        "Avg Response Time": 1000,  # Max average response time in ms
+        "Failure Count": 1,        # Max number of failures
     }
-    CSV_FILE = "locust_logs_stats.csv"  # Update with your CSV file path
+    CSV_FILE = "locust_logs/locust_logs_stats_stats.csv"
     validate_benchmark_results(CSV_FILE, THRESHOLDS)

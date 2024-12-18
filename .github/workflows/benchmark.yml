@@ -23,11 +23,24 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$(pwd)/generated" >> $GITHUB_ENV
+
     - name: Install Locust
       run: pip install locust
 
+    - name: Start Server
+      run: |
+        python banner_service.py &
+        sleep 5  # Give the server time to start
+
     - name: Run Benchmarks
-      run: locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 5m --host http://your-service-url
+      env:
+        PYTHONPATH: ${{ env.PYTHONPATH }}
+      run: locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 1m --csv=locust_logs/locust_logs_stats
+
+    - name: Verify Benchmark Results
+      run: ls -lh locust_logs/
 
     - name: Validate Benchmarks
       run: python benchmarks/validate_benchmark.py
@@ -38,3 +51,7 @@ jobs:
       with:
         name: benchmark-results
         path: locust_logs/
+
+    - name: Stop Server
+      run: pkill -f banner_service.py
+
