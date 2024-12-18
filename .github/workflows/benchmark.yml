@@ -32,7 +32,7 @@ jobs:
     - name: Run Benchmarks
       env:
         PYTHONPATH: ${{ env.PYTHONPATH }}
-      run: locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 5m --host http://127.0.0.1:51234 --csv locust_logs_stats
+      run: locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 5m --csv locust_logs_stats
     
     - name: Verify Benchmark Results
       run: ls -lh
