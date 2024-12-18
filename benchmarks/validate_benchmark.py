@@ -1,5 +1,6 @@
-import json
+import csv
 import sys
+import os
 
 def validate_benchmark_results(csv_file, thresholds):
     """
@@ -12,20 +13,41 @@ def validate_benchmark_results(csv_file, thresholds):
     Raises:
         ValueError: If any metric fails to meet its threshold.
     """
+    if not os.path.exists(csv_file):
+        print(f"Error: CSV file '{csv_file}' does not exist.")
+        sys.exit(1)
+
     try:
         with open(csv_file, 'r') as file:
-            lines = file.readlines()
+            reader = csv.DictReader(file)
+            rows = list(reader)
 
-        # Parse last line of CSV (summary stats)
-        headers = lines[0].strip().split(',')
-        values = lines[-1].strip().split(',')
-        stats = dict(zip(headers, values))
+        if not rows:
+            print("Error: CSV file is empty.")
+            sys.exit(1)
+
+        # Use the last row of CSV as the summary stats
+        stats = rows[-1]
 
         # Validate metrics
+        errors = []
         for metric, threshold in thresholds.items():
-            if float(stats[metric]) > threshold:
-                print(f"Threshold exceeded for {metric}: {stats[metric]} > {threshold}")
-                raise ValueError(f"Performance validation failed for {metric}")
+            if metric not in stats:
+                errors.append(f"Metric '{metric}' not found in CSV.")
+                continue
+
+            try:
+                metric_value = float(stats[metric])
+                if metric_value > threshold:
+                    errors.append(f"Threshold exceeded for {metric}: {metric_value} > {threshold}")
+            except ValueError:
+                errors.append(f"Invalid value for metric '{metric}': {stats[metric]}")
+
+        if errors:
+            print("Benchmark validation failed:")
+            for error in errors:
+                print(f" - {error}")
+            sys.exit(1)
         
         print("All metrics passed threshold checks!")
     except Exception as e:
@@ -33,9 +55,14 @@ def validate_benchmark_results(csv_file, thresholds):
         sys.exit(1)
 
 if __name__ == "__main__":
+    # Define performance thresholds
     THRESHOLDS = {
-        "response_time": 1000,  # Max response time in ms
-        "failure_rate": 1,     # Max failure rate in %
+        "Average Response Time": 1000,  # Max average response time in ms
+        "Failure Rate": 1.0,           # Max failure rate in %
+        "Requests/s": 50               # Min requests per second
     }
-    CSV_FILE = "locust_logs_stats.csv"  # Update with your CSV file path
+
+    # Path to the Locust CSV summary file
+    CSV_FILE = "locust_logs_stats.csv" 
+
     validate_benchmark_results(CSV_FILE, THRESHOLDS)
