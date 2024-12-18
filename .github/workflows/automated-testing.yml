@@ -56,11 +56,6 @@ jobs:
     - name: Run End-to-End Tests
       run: pytest -m e2e tests/
 
-
-## Temporarily disabled
-    - name: Run Skaffold Tests
-      run: skaffold test
-
     - name: Upload Test Results
       if: always()
       uses: actions/upload-artifact@v3
