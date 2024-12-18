@@ -1,4 +1,4 @@
-name: Run Unit Tests and Skaffold Tests
+name: Run Automated Tests
 
 on:
   pull_request:
