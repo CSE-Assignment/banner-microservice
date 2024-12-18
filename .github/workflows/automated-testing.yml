@@ -1,4 +1,4 @@
-name: Run Unit Tests and Skaffold Tests
+name: Run Automated Tests
 
 on:
   pull_request:
@@ -55,11 +55,6 @@ jobs:
 
     - name: Run End-to-End Tests
       run: pytest -m e2e tests/
-
-
-## Temporarily disabled
-   ## - name: Run Skaffold Tests
-   ##   run: skaffold test
 
     - name: Upload Test Results
       if: always()
