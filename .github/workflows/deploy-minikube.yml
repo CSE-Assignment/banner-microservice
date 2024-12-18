@@ -34,6 +34,15 @@ jobs:
           sudo systemctl enable cri-docker.service
           sudo systemctl enable --now cri-docker.socket
 
+      - name: Install CNI Plugins
+        run: |
+          VERSION="v1.2.0" # Check for the latest version: https://github.com/containernetworking/plugins/releases
+          curl -LO https://github.com/containernetworking/plugins/releases/download/$VERSION/cni-plugins-linux-amd64-$VERSION.tgz
+          sudo mkdir -p /opt/cni/bin
+          sudo tar -xvf cni-plugins-linux-amd64-$VERSION.tgz -C /opt/cni/bin
+          rm -f cni-plugins-linux-amd64-$VERSION.tgz
+
+
       - name: Set Up Minikube
         run: |
           curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
