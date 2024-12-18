@@ -58,8 +58,8 @@ jobs:
 
 
 ## Temporarily disabled
-   ## - name: Run Skaffold Tests
-   ##   run: skaffold test
+    - name: Run Skaffold Tests
+      run: skaffold test
 
     - name: Upload Test Results
       if: always()
