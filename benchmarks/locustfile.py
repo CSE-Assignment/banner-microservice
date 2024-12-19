@@ -1,6 +1,8 @@
 from locust import User, task, between
 from locust.contrib.fasthttp import FastHttpLocust
 import grpc
+import sys
+import os
 from generated import banner_service_pb2, banner_service_pb2_grpc
 
 
