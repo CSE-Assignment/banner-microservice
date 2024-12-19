@@ -1,0 +1,10 @@
+{
+    "id": "banner-DE",
+    "title": "Winterschlussverkauf",
+    "description": "Große Rabatte auf Wintermode!",
+    "start_time": "2024-01-01T00:00:00Z",
+    "end_time": "2025-12-15T23:59:59Z",
+    "locations": [
+        "DE"
+    ]
+}
