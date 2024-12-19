@@ -51,7 +51,8 @@ class BannerService(banner_service_pb2_grpc.BannerServiceServicer):
         matching_banners = [
             banner for banner in banners
             if banner.start_time <= current_time <= banner.end_time and
-               (location in banner.locations or "ALL" in banner.locations)
+               (location in banner.locations or "ALL" in banner.locations) and
+               self._is_special_condition_met(banner.special_condition, current_time)
         ]
 
         if not matching_banners:
@@ -74,6 +75,29 @@ class BannerService(banner_service_pb2_grpc.BannerServiceServicer):
             return self._create_response(DEFAULT_BANNER, "png")
 
         return self._create_response(selected_banner, "png", image_data)
+    
+    def _is_special_condition_met(self, special_condition: str|None, current_time: datetime) -> bool:
+        """
+        Evaluate if the special condition for a banner is met.
+
+        Args:
+            special_condition (str): The special condition to evaluate.
+            current_time (datetime): The current time to evaluate against.
+
+        Returns:
+            bool: True if the condition is met, otherwise False.
+        """
+        if not special_condition:
+            return True  # No special condition means always valid
+
+        match special_condition:
+            case "odd-minutes":
+                return current_time.minute % 2 != 0
+            case "even-minutes":
+                return current_time.minute % 2 == 0
+            case _:
+                logging.warning(f"Unrecognized special condition: {special_condition}")
+                return False
 
     def _create_response(
         self, 
