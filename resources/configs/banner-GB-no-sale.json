@@ -1,0 +1,11 @@
+{
+    "id": "banner-GB-no-sale",
+    "title": "Coming Soon: Spring Sale",
+    "description": "Get ready for amazing deals this March!",
+    "start_time": "2024-01-01T00:00:00Z",
+    "end_time": "2025-12-15T23:59:59Z",
+    "locations": [
+        "GB"
+    ],
+    "special_condition": "odd-minutes"
+}
