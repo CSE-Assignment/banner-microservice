@@ -17,10 +17,14 @@ Contains test files to ensure the reliability of the microservice.
 
 ### `benchmarks/`
 Includes benchmarking tools and validation scripts.
-- **Run Benchmarks**: Simulate traffic using Locust.
+**Run Benchmarks**: Simulate traffic using Locust.
   ```bash
-  locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 5m --host http://127.0.0.1:51234 --csv locust_logs
+  locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 1m --host http://127.0.0.1:51234 --csv locust_logs
   ```
+- `-u 100`: Simulates 100 users.
+- `-r 10`: Spawns 10 users per second.
+- `--run-time 1m`: Runs the test for 1 minute.
+- `--csv locust_logs`: Outputs results to CSV files in the `locust_logs/` directory.
  
 ## Benchmark Output
 
@@ -41,7 +45,7 @@ Automates testing and benchmarking workflows using GitHub Actions.
 - Runs unit, component, and end-to-end tests.
 ### 2. Benchmarking:
 - Triggers on-demand or weekly via workflow_dispatch.
-- Executes Locust tests and validates performance thresholds.`
+- Executes Locust tests and validates performance thresholds.
 
 
 # Getting Started
