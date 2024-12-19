@@ -15,6 +15,8 @@ Contains test files to ensure the reliability of the microservice.
 - **Run Component Tests**: `pytest -m component tests/`
 - **Run End-to-End Tests**: Start the service and execute: `pytest -m e2e tests/`
 
+More info [here](https://github.com/CSE-Assignment/banner-microservice/blob/main/tests/README.md#tests-directory)
+
 ### `benchmarks/`
 Includes benchmarking tools and validation scripts.
 **Run Benchmarks**: Simulate traffic using Locust.
@@ -35,6 +37,7 @@ Benchmarking results will be stored as CSV files in the `locust_logs/` directory
 - **locust_logs_stats_exceptions.csv**: Exception logs.
 - **locust_logs_stats_stats_history.csv**: Historical data.
 
+More info [here](https://github.com/CSE-Assignment/banner-microservice/blob/main/benchmarks/README.md#benchmarks-directory)
 
 ## `.github/workflows/`
 
