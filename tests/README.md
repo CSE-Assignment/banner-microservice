@@ -40,9 +40,22 @@ This directory contains all the test cases for the `banner-microservice` project
 ## Running Tests
 
 **Setup:**
-Ensure all dependencies are installed:
+
+- Ensure all dependencies are installed:
 ```bash
 python -m pip install -r requirements.txt
+```
+
+- Modify python path if you are using Linux:
+```
+export PYTHONPATH=$(pwd)
+export PYTHONPATH=$(pwd)/generated 
+```
+
+- Modify python path if you are using Powershell:
+```
+$env:PYTHONPATH = "$(pwd)"
+$env:PYTHONPATH = "$(pwd)\generated"
 ```
 
 ### Run Unit Tests

@@ -15,10 +15,37 @@ This directory contains files and scripts used for benchmarking the performance 
 
 To run benchmarks and generate performance reports, follow these steps:
 
-1. **Start the Service**  
-   Ensure the `banner-microservice` is running and accessible at the correct host and port (default: `http://127.0.0.1:51234`).
+1. **Install Dependencies**
+   - Go to the root of the repo.
+   - Have python 3.12+ running in a venv.
+   - Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+   - Modify python path if you are using Linux:
+   ```
+   export PYTHONPATH=$(pwd)
+   export PYTHONPATH=$(pwd)/generated 
+   ```
+   - Modify python path if you are using Powershell:
+   ```
+   $env:PYTHONPATH = "$(pwd)"
+   $env:PYTHONPATH = "$(pwd)\generated"
+   ```
 
-2. **Run Locust**  
+2. **Start the Service**  
+   Ensure the `banner-microservice` is running and accessible at the correct host and port (default: `http://127.0.0.1:51234`).
+   - Go to the root of the repo.
+   - Build the service: 
+   ```
+   docker build -t bannerservice:test .
+   ```
+   - Run the service:
+   ```
+   docker run --name banner-service -p 51234:51234 bannerservice:test 
+   ```
+
+3. **Run Locust**  
    Execute the following command to simulate traffic using Locust:
    ```bash
    locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 1m --host http://127.0.0.1:51234 --csv locust_logs
@@ -28,7 +55,7 @@ To run benchmarks and generate performance reports, follow these steps:
    - `--run-time 1m`: Runs the test for 1 minute.
    - `--csv locust_logs`: Outputs results to CSV files in the `locust_logs/` directory.
    
-3. **Validate Benchmark Results**  
+4. **Validate Benchmark Results**  
    After the benchmark run, validate the results by running:
    ```bash
    python benchmarks/validate_benchmark.py
