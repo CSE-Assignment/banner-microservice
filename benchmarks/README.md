@@ -62,7 +62,7 @@ Performance metrics are collected during benchmarking and include detailed insig
 - **# reqs (Number of Requests)**: Total number of requests sent for each banner location. Helps measure how evenly the traffic is distributed among different endpoints.
 - **# fails (Number of Failures)**: Total number of failed requests. A value of 0 confirms the service is functioning without errors under the current load.
 - **Avg (Average Response Time)**: Average time it takes for the service to respond to requests. For assessing server responsiveness.
-- **Min (Minimum Response Time)**: Shortest response time observed.
+- **Min (Minimum Response Time)**: Shortest response time observed. For identifying peak the service's efficiency.
 - **Max (Maximum Response Time)**: Longest response time recorded. For detecting delays or bottlenecks.
 - **Med (Median Response Time)**: Median response time, less affected by outliers and gives a realistic view of typical performance.
 - **req/s (Requests per Second)**: Rate at which requests are being processed. For capacity to handle concurrent users and sustained traffic.
