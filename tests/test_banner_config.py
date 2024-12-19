@@ -14,7 +14,7 @@ def example_config():
         "description": "End of Season LOOOOOT!",
         "start_time": "2024-12-01T00:00:00Z",
         "end_time": "2024-12-25T23:59:59Z",
-        "locations": ["US", "CA", "DE", "FR"]
+        "locations": ["BE", "FJ", "GL"]
     }
 
 
@@ -47,7 +47,7 @@ def test_banner_config_creation(example_config):
     assert banner.description == "End of Season LOOOOOT!"
     assert banner.start_time.isoformat() == "2024-12-01T00:00:00+00:00"
     assert banner.end_time.isoformat() == "2024-12-25T23:59:59+00:00"
-    assert "US" in banner.locations
+    assert "FJ" in banner.locations
 
 
 def test_load_configs_with_example_file():
@@ -62,5 +62,5 @@ def test_load_configs_with_example_file():
     assert example_banner is not None
     assert example_banner.title == "Some Sale"
     assert example_banner.description == "End of Season LOOOOOT!"
-    assert "US" in example_banner.locations
-    assert "DE" in example_banner.locations
+    assert "FJ" in example_banner.locations
+    assert "BE" in example_banner.locations

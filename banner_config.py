@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime
 import logging
-from typing import List
+from typing import List, Optional
 
 
 class BannerConfig:
@@ -18,13 +18,14 @@ class BannerConfig:
         locations (List[str]): List of locations where the banner is displayed.
     """
 
-    def __init__(self, id: str, title: str, description: str, start_time: str, end_time: str, locations: List[str]):
+    def __init__(self, id: str, title: str, description: str, start_time: str, end_time: str, locations: List[str], special_condition: Optional[str] = None):
         self.id = id
         self.title = title
         self.description = description
         self.start_time = datetime.fromisoformat(start_time.replace("Z", "+00:00"))
         self.end_time = datetime.fromisoformat(end_time.replace("Z", "+00:00"))
         self.locations = locations
+        self.special_condition = special_condition
 
     def __repr__(self):
         return f"BannerConfig(id={self.id}, title={self.title}, start_time={self.start_time}, end_time={self.end_time})"

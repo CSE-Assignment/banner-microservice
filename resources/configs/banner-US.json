@@ -1,0 +1,11 @@
+{
+    "id": "banner-US",
+    "title": "Holiday Bonanza",
+    "description": "Unwrap Deals This Festive Season!",
+    "start_time": "2024-01-01T00:00:00Z",
+    "end_time": "2025-12-15T23:59:59Z",
+    "locations": [
+        "US",
+        "CA"
+    ]
+}
