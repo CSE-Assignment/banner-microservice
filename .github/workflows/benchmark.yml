@@ -16,6 +16,9 @@ jobs:
     - name: Build Docker Image
       run: docker build -t banner-service-benchmark .
 
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$(pwd)/generated" >> $GITHUB_ENV
+
     - name: Run Docker Container for Benchmarking
       run: |
         docker run --rm banner-service-benchmark
