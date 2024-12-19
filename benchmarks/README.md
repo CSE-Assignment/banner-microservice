@@ -21,8 +21,13 @@ To run benchmarks and generate performance reports, follow these steps:
 2. **Run Locust**  
    Execute the following command to simulate traffic using Locust:
    ```bash
-   locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 5m --host http://127.0.0.1:51234 --csv locust_logs
+   locust -f benchmarks/locustfile.py --headless -u 100 -r 10 --run-time 1m --host http://127.0.0.1:51234 --csv locust_logs
    ```
+   - `-u 100`: Simulates 100 users.
+   - `-r 10`: Spawns 10 users per second.
+   - `--run-time 1m`: Runs the test for 1 minute.
+   - `--csv locust_logs`: Outputs results to CSV files in the `locust_logs/` directory.
+   
 3. **Validate Benchmark Results**  
    After the benchmark run, validate the results by running:
    ```bash
