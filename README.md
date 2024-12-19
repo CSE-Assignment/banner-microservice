@@ -98,6 +98,8 @@ To try out the testing capabilities and read more documentation on testing refer
 
 ## Benchmarking
 
+To try out running benchmarks and read more documentation on benchmarking refer to the README in `./benchmarks`.
+
 `benchmarks/` Includes benchmarking tools and validation scripts.
 **Run Benchmarks**: Simulate traffic using Locust.
   ```bash
