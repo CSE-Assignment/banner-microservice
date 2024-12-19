@@ -2,6 +2,12 @@
 
 The **Banner Microservice** is a gRPC-based service for delivering dynamic banner content based on user location and time. This repository includes source code, testing, benchmarking, and deployment instructions to ensure seamless development and integration.
 
+# More Docs
+
+1. README in `tests/`
+2. README in `benchmarks/`
+3. README in `.github/workflows/`
+
 ## Core Features
 - **Dynamic Banner Delivery**: Serve customized banners based on user location and time.
 - **gRPC API**: Efficient communication with other microservices.
@@ -40,9 +46,9 @@ To test the promotional banner feature you need to start our fork of the Google 
 8. Use the country dropdown in the navigation bar to display different banners based on location.
 9. Select `GB` as the location. Every odd minute a `Flash Sale Coming Soon` banner will be displayed, every even minute a `Flash Sale` banner will be displayed, for showcasing time-based selection.
 
-## Quick Start Guide - Testing
+## Quick Start Guide - Testing/Benchmarking
 
-To try out the testing capabilities of this project refer to the README in `./tests`.
+To try out the testing/benchmarking capabilities of this project refer to the README in `./tests` and `./benchmarks`.
 
 # Technical Documentation
 
@@ -79,17 +85,18 @@ Banner configurations are stored in JSON files in `resources/configs/`. Example 
 }
 ```
 
-# Testing Overview
+# QA - Directory Overview
+
+## Testing Overview
 
 To try out the testing capabilities and read more documentation on testing refer to the README in `./tests`.
-
 
 `tests/` Contains test files to ensure the reliability of the microservice.
 - **Run Unit Tests**: `pytest -m unit tests/`
 - **Run Component Tests**: `pytest -m component tests/`
 - **Run End-to-End Tests**: Start the service and execute: `pytest -m e2e tests/`
 
-# Benchmarking
+## Benchmarking
 
 `benchmarks/` Includes benchmarking tools and validation scripts.
 **Run Benchmarks**: Simulate traffic using Locust.
@@ -101,7 +108,7 @@ To try out the testing capabilities and read more documentation on testing refer
 - `--run-time 1m`: Runs the test for 1 minute.
 - `--csv locust_logs`: Outputs results to CSV files in the `locust_logs/` directory.
  
-## Benchmark Output
+### Benchmark Output
 
 Benchmarking results will be stored as CSV files in the `locust_logs/` directory. Key files include:
 
@@ -111,7 +118,7 @@ Benchmarking results will be stored as CSV files in the `locust_logs/` directory
 - **locust_logs_stats_stats_history.csv**: Historical data.
 
 
-# Workflows
+## Workflows
 
 `.github/workflows/` Automates testing and benchmarking workflows using GitHub Actions.
 
