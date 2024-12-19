@@ -2,6 +2,7 @@ from locust import User, task, between
 import grpc
 import sys
 import os
+import time
 
 # Add the generated directory to PYTHONPATH
 sys.path.append(os.path.join(os.path.dirname(__file__), "generated"))
@@ -23,16 +24,16 @@ class BannerServiceUser(User):
     def get_current_banner(self):
         """
         Task to call the GetCurrentBanner endpoint for different locations.
-        This logs requests as successes or failures for Locust tracking.
+        Logs requests as successes or failures for Locust tracking.
         """
         locations = ["US", "FR", "INVALID_LOCATION", "GB", "DE"]
         for location in locations:
             request = banner_service_pb2.GetCurrentBannerRequest(location=location)
-            start_time = self.environment.events.request_success.start_time()
+            start_time = time.time()
             try:
                 # Call the gRPC method
                 response = self.stub.GetCurrentBanner(request)
-                response_time = (self.environment.events.request_success.end_time() - start_time) * 1000
+                response_time = (time.time() - start_time) * 1000  # Response time in milliseconds
 
                 # Log successful requests
                 self.environment.events.request_success.fire(
@@ -48,8 +49,9 @@ class BannerServiceUser(User):
                 print(f"Image Data Size: {len(response.image)} bytes")
 
             except grpc.RpcError as e:
+                response_time = (time.time() - start_time) * 1000  # Response time in milliseconds
+
                 # Log failed requests
-                response_time = (self.environment.events.request_failure.end_time() - start_time) * 1000
                 self.environment.events.request_failure.fire(
                     request_type="gRPC",
                     name="GetCurrentBanner",
