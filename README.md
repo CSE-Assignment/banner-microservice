@@ -32,7 +32,7 @@ Benchmarking results will be stored as CSV files in the `locust_logs/` directory
 - **locust_logs_stats_stats_history.csv**: Historical data.
 
 
-## `.github/workflows/
+## `.github/workflows/`
 
 Automates testing and benchmarking workflows using GitHub Actions.
 
