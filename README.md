@@ -2,12 +2,6 @@
 
 The **Banner Microservice** is a gRPC-based service for delivering dynamic banner content based on user location and time. This repository includes source code, testing, benchmarking, and deployment instructions to ensure seamless development and integration.
 
-# More Docs
-
-1. README in `tests/`
-2. README in `benchmarks/`
-3. README in `.github/workflows/`
-
 ## Core Features
 - **Dynamic Banner Delivery**: Serve customized banners based on user location and time.
 - **gRPC API**: Efficient communication with other microservices.
@@ -15,6 +9,12 @@ The **Banner Microservice** is a gRPC-based service for delivering dynamic banne
 - **Kubernetes Deployment**: Fully containerized and deployable with Skaffold.
 - **Performance Benchmarking**: Evaluate service performance under load with Locust.
 - **Comprehensive Testing**: Includes unit, component, and end-to-end tests.
+
+# More Docs
+
+1. README in `tests/`
+2. README in `benchmarks/`
+3. README in `.github/workflows/`
 
 # Getting Started
 
