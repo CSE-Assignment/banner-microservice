@@ -34,3 +34,5 @@ if __name__ == "__main__":
     test_get_current_banner("US")
     test_get_current_banner("FR")
     test_get_current_banner("INVALID_LOCATION")
+    test_get_current_banner("GB")
+    test_get_current_banner("DE")
