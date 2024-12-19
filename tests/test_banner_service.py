@@ -26,7 +26,7 @@ def test_get_current_banner_with_image(mocker, service):
     mock_datetime = mocker.patch("banner_service.datetime")
     mock_datetime.now.return_value = datetime(2024, 12, 10, tzinfo=timezone.utc)
 
-    request = banner_service_pb2.GetCurrentBannerRequest(location="US")
+    request = banner_service_pb2.GetCurrentBannerRequest(location="FJ")
     response = service.GetCurrentBanner(request, None)
 
     assert response.title == "Some Sale"
