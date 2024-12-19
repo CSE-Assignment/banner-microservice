@@ -3,9 +3,11 @@ import grpc
 import sys
 import os
 
+# Add the generated directory to PYTHONPATH
 sys.path.append(os.path.join(os.path.dirname(__file__), "generated"))
 
 from generated import banner_service_pb2, banner_service_pb2_grpc
+
 
 class BannerServiceUser(User):
     wait_time = between(1, 3)  # Simulates users waiting 1 to 3 seconds between actions
@@ -21,18 +23,39 @@ class BannerServiceUser(User):
     def get_current_banner(self):
         """
         Task to call the GetCurrentBanner endpoint for different locations.
+        This logs requests as successes or failures for Locust tracking.
         """
         locations = ["US", "FR", "INVALID_LOCATION", "GB", "DE"]
         for location in locations:
             request = banner_service_pb2.GetCurrentBannerRequest(location=location)
+            start_time = self.environment.events.request_success.start_time()
             try:
+                # Call the gRPC method
                 response = self.stub.GetCurrentBanner(request)
+                response_time = (self.environment.events.request_success.end_time() - start_time) * 1000
+
+                # Log successful requests
+                self.environment.events.request_success.fire(
+                    request_type="gRPC",
+                    name="GetCurrentBanner",
+                    response_time=response_time,
+                    response_length=len(response.image),
+                )
                 print("Banner Response:")
                 print(f"Title: {response.title}")
                 print(f"Description: {response.description}")
                 print(f"Image Format: {response.image_format}")
                 print(f"Image Data Size: {len(response.image)} bytes")
+
             except grpc.RpcError as e:
+                # Log failed requests
+                response_time = (self.environment.events.request_failure.end_time() - start_time) * 1000
+                self.environment.events.request_failure.fire(
+                    request_type="gRPC",
+                    name="GetCurrentBanner",
+                    response_time=response_time,
+                    exception=e,
+                )
                 print(f"gRPC error for location {location}: {e.code()} - {e.details()}")
 
     def on_stop(self):
